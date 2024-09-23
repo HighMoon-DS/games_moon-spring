@@ -21,7 +21,7 @@ public class PlataformaController {
 
     @RequestMapping("/list")
     public String list(Model ui) {
-        ui.addAtribute("plataformas", plataformaRepo.findAll());
+        ui.addAttribute("plataformas", plataformaRepo.findAll());
         return "plataforma/list";
     }
 
@@ -32,6 +32,7 @@ public class PlataformaController {
 
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public String insert (@RequestParam("nome")String nome){
+        Plataforma plataforma = new Plataforma();
         plataforma.setNome(nome);
 
         plataformaRepo.save(plataforma);
@@ -46,7 +47,7 @@ public class PlataformaController {
             Optional<Plataforma> plataforma = plataformaRepo.findById(id);
 
             if(plataforma.isPresent()){
-                ui.addAtribute("plataforma", plataforma.get());
+                ui.addAttribute("plataforma", plataforma.get());
                 return "plataforma/uptade";
             }
 
@@ -58,7 +59,7 @@ public class PlataformaController {
         @RequestParam("id") long id,
         @RequestParam("nome") String nome) {
 
-            Optonal<Plataforma> plataforma = plataformaRepo.findById(id);
+            Optional<Plataforma> plataforma = plataformaRepo.findById(id);
 
             if(plataforma.isPresent()) {
                 plataforma.get().setNome(nome);
@@ -77,7 +78,7 @@ public class PlataformaController {
             Optional<Plataforma> plataforma = plataformaRepo.findById(id);
 
             if(plataforma.isPresent()){
-                ui.addAtribute("plataforma", plataforma.get());
+                ui.addAttribute("plataforma", plataforma.get());
                 return "plataforma/delete";
             }
 

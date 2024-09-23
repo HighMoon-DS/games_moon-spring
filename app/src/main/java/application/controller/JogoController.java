@@ -21,7 +21,7 @@ import application.repository.PlataformaRepository;
 
 @Controller
 @RequestMapping("/jogo")
-public class jogoController {
+public class JogoController {
     @Autowired
     private JogoRepository jogoRepo;
     @Autowired
@@ -32,14 +32,14 @@ public class jogoController {
 
     @RequestMapping("/list")
     public String list(Model ui) {
-        ui.addAtribute("jogos", jogoRepo.findAll());
+        ui.addAttribute("jogos", jogoRepo.findAll());
         return "jogo/list";
     }
 
     @RequestMapping("/insert")
     public String insert(Model ui){
-        ui.addAtribute("categorias", categoriaRepo.findAll());
-        ui.addAtribute("plataformas", plataformaRepo.findAll());
+        ui.addAttribute("categorias", categoriaRepo.findAll());
+        ui.addAttribute("plataformas", plataformaRepo.findAll());
         return "jogo/insert";
     }
 
@@ -49,7 +49,7 @@ public class jogoController {
         @RequestParam("categoria") long idCategoria,
         @RequestParam("plataformas") long[] idsPlataformas) {
 
-            jogo jogo = new Jogo();
+            Jogo jogo = new Jogo();
             jogo.setTitulo(titulo);
             jogo.setCategoria(categoriaRepo.findById(idCategoria).get());
             for(long p: idsPlataformas) {
@@ -61,40 +61,40 @@ public class jogoController {
             jogoRepo.save(jogo);
             return "redirect:/jogo/list";
         }
-    @RequestMapping("/uptade")
-    public String uptade(
+    @RequestMapping("/update")
+    public String update(
         @RequestParam("id") long id,
         Model ui) {
 
-            Optonal<jogo> jogo = jogoRepo.findById(id);
+            Optional<Jogo> jogo = jogoRepo.findById(id);
             if(jogo.isPresent()) {
-                ui.addAtribute("jogo", jogo.get());
-                ui.addAtribute("categorias", categoriaRepo.findAll());
-                ui.addAtribute("plataformas", plataformaRepo.findAll());
-                return "jogo/uptade";
+                ui.addAttribute("jogo", jogo.get());
+                ui.addAttribute("categorias", categoriaRepo.findAll());
+                ui.addAttribute("plataformas", plataformaRepo.findAll());
+                return "jogo/update";
             }
             return "redirect:/jogo/list";
         }
-    @RequstMapping(value = "/uptade", method = RequestMethod.POST)
-    public String uptade(
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String update(
         @RequestParam("id") long id,
         @RequestParam("titulo") String titulo,
         @RequestParam("categoria") long idCategoria,
         @RequestParam("plataformas") long[] idsPlataformas) {
 
-            Optional<jogo> jogo = jogoRepo.findById(id);
+            Optional<Jogo> jogo = jogoRepo.findById(id);
 
             if(jogo.isPresent()) {
                 jogo.get().setTitulo(titulo);
-                jogo.get().setCategoria(categoriaRepo.findById(idCategoria),get());
-                Set<Plataforma> uptadePlataforma = new HashSet <>();
+                jogo.get().setCategoria(categoriaRepo.findById(idCategoria).get());
+                Set<Plataforma> updatePlataforma = new HashSet <>();
                 for(long p: idsPlataformas) {
                     Optional<Plataforma> plataforma = plataformaRepo.findById(p);
                     if(plataforma.isPresent()) {
-                        uptadePlataforma.add(plataforma.get());
+                        updatePlataforma.add(plataforma.get());
                     }
                 }
-                jogo.get().setPlataformas(uptadePlataforma);
+                jogo.get().setPlataformas(updatePlataforma);
                 jogoRepo.save(jogo.get());
             }
             return "redirect:/jogo/list";
@@ -106,10 +106,10 @@ public class jogoController {
         @RequestParam("id") long id,
         Model ui) {
 
-        Optional<jogo> jogo = jogoRepo.findById(id);
+        Optional<Jogo> jogo = jogoRepo.findById(id);
 
         if(jogo.isPresent()){
-            ui.addAtribute("jogo", jogo.get());
+            ui.addAttribute("jogo", jogo.get());
             return "jogo/delete";
         }
         return "redirect:/jogo/list";
