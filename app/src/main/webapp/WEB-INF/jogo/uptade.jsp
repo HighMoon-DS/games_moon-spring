@@ -9,7 +9,7 @@
     <body>
         <div class="container">
             <h1>Editar Jogo</h1>
-            <form action="/jogo/uptade" method="post">
+            <form action="/jogo/update" method="post">
                 <input type="hidden" name="id" value="${jogo.id}" />
                 <div class="form-group">
                     <label for="titulo">Titulo:</label>

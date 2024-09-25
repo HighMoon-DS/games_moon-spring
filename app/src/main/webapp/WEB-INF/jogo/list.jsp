@@ -31,7 +31,7 @@
                             </c:forEach>
                         </td>
                         <td>
-                            <a href="/jogo/uptade?id=${item.id}" class="btn btn-warning">Editar</a>
+                            <a href="/jogo/update?id=${item.id}" class="btn btn-warning">Editar</a>
                             <a href="/jogo/delete?id=${item.id}" class="btn btn-danger">Excluir</a>
                         </td>
                     </tr>

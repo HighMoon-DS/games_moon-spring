@@ -40,22 +40,22 @@ public class PlataformaController {
         return "redirect:/plataforma/list";
     }
 
-    @RequestMapping("/uptade")
-    public String uptade(
+    @RequestMapping("/update")
+    public String update(
         @RequestParam("id") long id,
         Model ui) {
             Optional<Plataforma> plataforma = plataformaRepo.findById(id);
 
             if(plataforma.isPresent()){
                 ui.addAttribute("plataforma", plataforma.get());
-                return "plataforma/uptade";
+                return "plataforma/update";
             }
 
             return "redirect:/plataforma/list";
         }
 
-    @RequestMapping(value = "/uptade", method = RequestMethod.POST)
-    public String uptade(
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String update(
         @RequestParam("id") long id,
         @RequestParam("nome") String nome) {
 
